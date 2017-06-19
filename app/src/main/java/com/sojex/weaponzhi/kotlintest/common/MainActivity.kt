@@ -1,11 +1,14 @@
 package com.sojex.weaponzhi.kotlintest.common
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.widget.Toast
 import com.sojex.weaponzhi.kotlintest.R
 import com.sojex.weaponzhi.kotlintest.adapter.ForecastListAdapter
+import org.jetbrains.anko.find
 
 class MainActivity : AppCompatActivity() {
     private val items = listOf("Mon 6/23 - Sunny - 31/17",
@@ -19,8 +22,15 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val forecastList = findViewById(R.id.forecast_list) as RecyclerView
+        val forecastList:RecyclerView = find(R.id.forecast_list)
         forecastList.layoutManager = LinearLayoutManager(this)
         forecastList.adapter = ForecastListAdapter(items)
     }
+}
+
+/**
+ * 扩展函数
+ */
+fun Context.toast(message:String, duration: Int = Toast.LENGTH_SHORT){
+    Toast.makeText(this,message,duration).show()
 }

@@ -9,6 +9,7 @@ import com.sojex.weaponzhi.kotlintest.adapter.ForecastListAdapter
 import com.sojex.weaponzhi.kotlintest.web.RequestForecastCommand
 import org.jetbrains.anko.async
 import org.jetbrains.anko.find
+import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
 
 class MainActivity : AppCompatActivity() {
@@ -26,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         val forecastList: RecyclerView = find(R.id.forecast_list)
         forecastList.layoutManager = LinearLayoutManager(this)
         async { val result = RequestForecastCommand("94043").execute()
-            uiThread { forecastList.adapter = ForecastListAdapter(result) }
+            uiThread { forecastList.adapter = ForecastListAdapter(result){ toast(it.date)} }
         }
 
     }

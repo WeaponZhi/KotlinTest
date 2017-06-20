@@ -1,9 +1,17 @@
 package com.sojex.weaponzhi.kotlintest.adapter
 
 import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import com.sojex.weaponzhi.kotlintest.R
+import com.sojex.weaponzhi.kotlintest.common.ctx
+import com.sojex.weaponzhi.kotlintest.common.domain.Forecast
 import com.sojex.weaponzhi.kotlintest.common.domain.ForecastList
+import com.squareup.picasso.Picasso
+import org.jetbrains.anko.find
 
 /**
  * ForecastListAdapter RecyclerView 的 Adapter
@@ -11,19 +19,46 @@ import com.sojex.weaponzhi.kotlintest.common.domain.ForecastList
  * time: 2017/6/19 15:37
  * e-mail: guanzhi.zhang@sojex.cn
  */
-class ForecastListAdapter(val weekForecast:ForecastList):RecyclerView.Adapter<ForecastListAdapter.ViewHolder>() {
+class ForecastListAdapter(val weekForecast: ForecastList,val itemClick: (Forecast)->Unit) : RecyclerView.Adapter<ForecastListAdapter.ViewHolder>() {
     override fun getItemCount(): Int = weekForecast.size()
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        //操作符重载
-        with(weekForecast[position]){
-            holder.textView.text = "$date - $description - $high/$low"
+        holder.bindForecast(weekForecast[position])
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.ctx)
+                .inflate(R.layout.item_forecast,parent,false)
+        return ViewHolder(view,itemClick)
+    }
+
+    class ViewHolder(view: View, val itemClick: (Forecast)->Unit) : RecyclerView.ViewHolder(view) {
+        private val iconView: ImageView
+        private val dateView: TextView
+        private val descriptionView: TextView
+        private val maxTemperatureView: TextView
+        private val minTemperatureView: TextView
+        init {
+            iconView = view.find(R.id.icon)
+            dateView = view.find(R.id.date)
+            descriptionView = view.find(R.id.description)
+            maxTemperatureView = view.find(R.id.maxTemperature)
+            minTemperatureView = view.find(R.id.minTemperature)
+        }
+
+        fun bindForecast(forecast: Forecast){
+            with(forecast){
+                Picasso.with(itemView.ctx).load(iconUrl).into(iconView)
+                dateView.text = date
+                descriptionView.text = description
+                maxTemperatureView.text = "$high"
+                minTemperatureView.text = "$low"
+                itemView.setOnClickListener { itemClick(forecast) }
+            }
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder?{
-        return ViewHolder(TextView(parent.context))
+    interface OnItemClickListener {
+        operator fun invoke(forecast: Forecast)
     }
-
-    class ViewHolder(val textView : TextView):RecyclerView.ViewHolder(textView)
 }

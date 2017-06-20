@@ -1,5 +1,9 @@
 package com.sojex.weaponzhi.kotlintest.web
 
+import com.google.gson.Gson
+import com.sojex.weaponzhi.kotlintest.common.ForecastResult
+import java.net.URL
+
 /**
  * ForecastRequest 请求类
  * author:张冠之
@@ -13,8 +17,8 @@ public class ForecastRequest(val zipCode:String){
         private val COMPLETE_URL = "$URL&APPID=$APP_ID&q="
     }
 
-    fun execute():ForecastRequest{
+    fun execute():ForecastResult{
         val forecastJsonStr = URL(COMPLETE_URL + zipCode).readText()
-        return 
+        return Gson().fromJson(forecastJsonStr,ForecastResult::class.java)
     }
 }

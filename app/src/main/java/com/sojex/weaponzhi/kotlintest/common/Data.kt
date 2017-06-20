@@ -1,4 +1,4 @@
-package com.sojex.weaponzhi.kotlintest.data
+package com.sojex.weaponzhi.kotlintest.common
 
 /**
  * Created by admin on 2017/6/19.

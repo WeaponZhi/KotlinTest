@@ -11,6 +11,7 @@ import com.sojex.weaponzhi.kotlintest.common.ctx
 import com.sojex.weaponzhi.kotlintest.common.domain.Forecast
 import com.sojex.weaponzhi.kotlintest.common.domain.ForecastList
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.item_forecast.view.*
 import org.jetbrains.anko.find
 
 /**
@@ -48,11 +49,11 @@ class ForecastListAdapter(val weekForecast: ForecastList,val itemClick: (Forecas
 
         fun bindForecast(forecast: Forecast){
             with(forecast){
-                Picasso.with(itemView.ctx).load(iconUrl).into(iconView)
-                dateView.text = date
-                descriptionView.text = description
-                maxTemperatureView.text = "$high"
-                minTemperatureView.text = "$low"
+                Picasso.with(itemView.ctx).load(iconUrl).into(itemView.icon)
+                itemView.date.text = date
+                itemView.description.text = description
+                itemView.maxTemperature.text = "${high.toString()}"
+                itemView.minTemperature.text = "${low.toString()}"
                 itemView.setOnClickListener { itemClick(forecast) }
             }
         }

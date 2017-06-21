@@ -7,11 +7,10 @@ import android.support.v7.widget.RecyclerView
 import com.sojex.weaponzhi.kotlintest.R
 import com.sojex.weaponzhi.kotlintest.adapter.ForecastListAdapter
 import com.sojex.weaponzhi.kotlintest.web.RequestForecastCommand
+import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.async
-import org.jetbrains.anko.find
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
-
 class MainActivity : AppCompatActivity() {
     private val items = listOf("Mon 6/23 - Sunny - 31/17",
             "Tue 6/24 - Foggy - 21/8",
@@ -24,10 +23,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val forecastList: RecyclerView = find(R.id.forecast_list)
-        forecastList.layoutManager = LinearLayoutManager(this)
+        forecast_list.layoutManager = LinearLayoutManager(this)
         async { val result = RequestForecastCommand("94043").execute()
-            uiThread { forecastList.adapter = ForecastListAdapter(result){ toast(it.date)} }
+            uiThread { forecast_list.adapter = ForecastListAdapter(result){ toast(it.date)} }
         }
 
     }

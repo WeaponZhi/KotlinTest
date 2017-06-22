@@ -33,7 +33,8 @@ dependencies {
     compile "org.jetbrains.anko:anko-common:$anko_version"
     compile 'com.google.code.gson:gson:2.4'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'org.jetbrains.anko:anko-sqlite:0.10.0'
+    compile 'junit:junit:4.12'
+    compile "org.jetbrains.anko:anko-sqlite:$anko_version"
 }
 repositories {
     mavenCentral()

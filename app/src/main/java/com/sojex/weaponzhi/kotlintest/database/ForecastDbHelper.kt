@@ -1,5 +1,6 @@
 package com.sojex.weaponzhi.kotlintest.database
 
+import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import com.sojex.weaponzhi.kotlintest.App
 import com.sojex.weaponzhi.kotlintest.database.table.CityForecastTable
@@ -8,8 +9,9 @@ import org.jetbrains.anko.db.*
 
 /**
  * Created by admin on 2017/6/22.
+ * 使用依赖注入
  */
-class ForecastDbHelper() : ManagedSQLiteOpenHelper(App.instance, ForecastDbHelper.DB_NAME, null, ForecastDbHelper.DB_VERSION) {
+class ForecastDbHelper(ctx:Context = App.instance) : ManagedSQLiteOpenHelper(ctx, ForecastDbHelper.DB_NAME, null, ForecastDbHelper.DB_VERSION) {
 
     companion object {
         val DB_NAME = "forecast.db"

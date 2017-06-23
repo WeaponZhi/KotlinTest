@@ -327,4 +327,178 @@ class CollectionOperationTest {
     fun testIndexOfLast() {
         assertEquals(5, list.indexOfLast { it % 2 == 0 })
     }
+
+    /**
+     * last
+     * 返回符合给定函数条件的最后一个元素
+     */
+    fun testLast() {
+        assertEquals(6, list.last { it % 2 == 0 })
+    }
+
+    /**
+     * lastOrNull
+     * 返回符合给定函数条件的最后一个元素，如果没有符合则返回 null
+     */
+    fun testLastOrNull() {
+        val list = listOf(1, 2, 3, 4, 5, 6)
+        assertNull(list.lastOrNull { it % 7 == 0 })
+    }
+
+    /**
+     * single
+     * 返回符合给定函数的单个元素，如果没有符合或者超过一个，则抛出异常
+     */
+    fun testSingle() {
+        assertEquals(5, list.single { it % 5 == 0 })
+    }
+
+    /**
+     * singleOrNull
+     * 返回符合给定函数的单个元素，如果没有符合或者超过一个，则返回 null
+     */
+    fun testSingleOrNull() {
+        assertNull(list.singleOrNull { it % 7 == 0 })
+    }
+    //===============================生产操作符=========================================
+    /**
+     * merge
+     * 把两个集合合并成一个新的，相同 index 的元素通过给定的函数进行合并成新的元素作为
+     * 新的集合的一个元素，返回这个新的集合。新的集合的大小由最小的那个集合大小决定。
+     */
+    fun testMerge() {
+        val list = listOf(1, 2, 3, 4, 5, 6)
+        val listRepeated = listOf(2, 2, 3, 4, 5, 5, 6)
+//        assertEquals(listOf(3, 4, 6, 8, 10, 11), list.merge(listRepeated) { it1, it2 -> it1 + it2 })
+    }
+
+    /**
+     * partition
+     * 把一个给定的集合分割成两个，第一个集合是由原集合每一项元素匹配给定函数条件返回 true 的元素组成，
+     * 第二个集合是由原集合每一项元素匹配给定函数条件返回 false 的元素组成
+     */
+    fun testPartition() {
+        assertEquals(
+                Pair(listOf(2, 4, 6), listOf(1, 3, 5)),
+                list.partition { it % 2 == 0 }
+        )
+    }
+
+    /**
+     * plus
+     * 返回一个包含原集合和给定集合中所有元素的集合，因为函数名字相同，所以我们可以用 “+” 操作符
+     */
+    fun testPlus() {
+        listOf(1, 2, 3, 4, 5, 6, 7, 8)
+        list + listOf(7, 8)
+    }
+
+    /**
+     * zip
+     * 返回由 pair 组成的 List，每个 pair 由两个集合中相同 index 的元素组成。这个返回的
+     * List 的大小由最小的那个集合决定。
+     */
+    //Pair 是 Kotlin 提供的用来处理双元对数据的，可以理解成 Map 中的一个键值对。
+    fun testZip() {
+        assertEquals(
+                listOf(Pair(1, 7), Pair(2, 8)),
+                list.zip(listOf(7, 8))
+        )
+    }
+
+    /**
+     * unzip
+     * 从包含 pair 的 List 中生成包含 List 的 Pair
+     */
+    fun testUnZip() {
+        assertEquals(
+                Pair(listOf(5, 6), listOf(7, 8)),
+                listOf(Pair(5, 7), Pair(6, 8)).unzip()
+        )
+    }
+
+    //=================================顺序操作符===========================================
+    val unsortedList = listOf(3, 2, 7, 5)
+
+    /**
+     * reverse
+     * 返回一个与指定 list 相反顺序的 list
+     */
+    fun testReverse() {
+        assertEquals(listOf(5, 7, 2, 3), unsortedList.reversed())
+    }
+
+    /**
+     * sort
+     * 返回一个自然排序后的 list。
+     */
+    fun testSort() {
+        assertEquals(listOf(2, 3, 5, 7), unsortedList.sorted())
+    }
+
+    /**
+     * sortBy
+     * 返回一个根据指定函数排序后的 list
+     */
+    fun testSortBy() {
+        assertEquals(listOf(3, 7, 2, 5), unsortedList.sortedBy { it % 3 })
+    }
+
+    /**
+     * sortDescending
+     * 返回一个降序排序后的 List
+     */
+    fun testSortDescending() {
+        assertEquals(listOf(7, 5, 3, 2), unsortedList.sortedDescending())
+    }
+
+    /**
+     * sortDescendingBy
+     * 返回一个根据指定函数降序排序后的 list
+     */
+    fun testSortDescendingBy() {
+        assertEquals(listOf(2, 5, 7, 3), unsortedList.sortedByDescending { it % 3 })
+    }
+
+    companion object {
+        @JvmStatic
+        fun main(args: Array<String>) {
+            var collection = CollectionOperationTest()
+            println(collection.unsortedList.sortedBy { it % 3 })
+            println(collection.unsortedList)
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
